@@ -24,15 +24,15 @@ function print_r ( t )
 end
 
 CppBuild = {}
-CppBuild.util 					= require("Utility")
-CppBuild.CppPackage 			= require("CppPackage")
-CppBuild.PackageManager 		= require("PackageManager")
-CppBuild.Workspace 				= require("Workspace")
-CppBuild.Project 				= require("Project")
-CppBuild.ConsoleApplication 	= require("ConsoleApplication")
-CppBuild.StaticLibrary 			= require("StaticLibrary")
-CppBuild.SharedLibrary 			= require("SharedLibrary")
+CppBuild.util 					= require("src/Utility")
+CppBuild.CppPackage 			= require("src/CppPackage")
+CppBuild.PackageManager 		= require("src/PackageManager")
+CppBuild.Workspace 				= require("src/Workspace")
+CppBuild.Project 				= require("src/Project")
+CppBuild.ConsoleApplication 	= require("src/ConsoleApplication")
+CppBuild.StaticLibrary 			= require("src/StaticLibrary")
+CppBuild.SharedLibrary 			= require("src/SharedLibrary")
 
-CppBuild.parseTargetConfig 		= require("TargetConfig")
+CppBuild.parseTargetConfig 		= require("src/TargetConfig")
 
 return CppBuild
