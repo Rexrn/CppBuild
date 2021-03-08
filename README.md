@@ -6,11 +6,11 @@ An package-based build system for C++ that leverages [premake5](https://github.c
 |[**Goals**](#goals)|[**Examples**](Examples/index.md)|[**Documentation**](Documentation/index.md)|
 
 
-## 1. Quick Start
+## Quick Start
 
 Create two files:
 
-### 1.1 Project setup
+### 1. Project setup
 
 **`Main.cpp`**
 ```cpp
@@ -35,7 +35,7 @@ return {
 }
 ```
 
-### 1.2 Building the project
+### 2. Building the project
 
 Run following command **in the project root**.
 
