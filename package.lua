@@ -25,6 +25,7 @@ end
 
 CppBuild = {}
 CppBuild.util 					= require("src/Utility")
+CppBuild.quick 					= require("src/Quick")
 CppBuild.CppPackage 			= require("src/CppPackage")
 CppBuild.PackageManager 		= require("src/PackageManager")
 CppBuild.Workspace 				= require("src/Workspace")

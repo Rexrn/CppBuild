@@ -46,12 +46,6 @@ function Utility.initWorkspace()
 		removeplatforms { "x86" }
 	end
 
-	-- MSBuild specific configuration
-	if Utility.gen.isVisualStudio() then
-		filter {"system:windows", "action:vs*"}
-			systemversion(Utility.getWindowsSDKVersion() .. ".0")
-	end
-
 	-- gmake specific configuration
 	if Utility.gen.isGMake() then
 		links {
