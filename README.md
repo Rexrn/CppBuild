@@ -40,16 +40,26 @@ return {
 Run following command **in the project root**.
 
 ```
-cppbuild all --local
+cppbuild vs2019
 ```
 
+You can select one of the following generators:
+- `vs2019`
+- `vs2017`
+- `vs2015`
+- `gmake`
+- `gmake2`
+- `xcode`
+- and more (for complete documentation [look here](https://github.com/premake/premake-core/wiki/Modules))
+
+<!-- TODO:
 This will perform all necessary commands to:
 
 1. configure
 2. build
 3. install (locally)
 
-your program. You will find your executable in `install/bin` folder.
+your program. You will find your executable in `install/bin` folder. -->
 
 ## Installation
 
