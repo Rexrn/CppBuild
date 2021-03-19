@@ -2,7 +2,8 @@ Workspace = {}
 
 function Workspace.new(name)
 	local self = {
-		projects = {}
+		projects = {},
+		type = "workspace"
 	}
 
 	local _name = name

@@ -53,7 +53,14 @@ function CppPackage.new(id, root)
 
 		local subPkg = CppPackage.new(name, self)
 		subPkg.cfg = self.cfg[name]
+		if subPkg.cfg.name == nil then
+			subPkg.cfg.name = name
+		end
 		return subPkg
+	end
+
+	function self.platformDir(base, rest)
+		return self.rel( path.join(base, "%{cfg.platform}/%{cfg.buildcfg}", rest) )
 	end
 
 	return self

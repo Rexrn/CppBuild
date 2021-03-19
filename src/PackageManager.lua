@@ -67,7 +67,7 @@ function PackageManager.new()
 		includedirs(pkg.rel(inc))
 		-- print("Including: \"" .. self.pkgDir(pkgName, inc) .. "\"")
 	end
-	
+
 	function self.performLink(pkg, lib)
 		links(pkg.rel(lib))
 		-- print("Linking: \"" .. self.pkgDir(pkgName, lib) .. "\"")
@@ -91,6 +91,7 @@ function PackageManager.new()
 		return pkg
 	end
 
+	-- Deprecated
 	function self.forEachPackagePropDo(whatToDo, propName, pkg)
 
 		if type(pkg.cfg[propName]) == "string" then
@@ -100,13 +101,38 @@ function PackageManager.new()
 				whatToDo(pkg, propValue)
 			end
 		else
-			error("Invalid type of \"" .. pkg.id() .. ".inc\" - " .. type(pkg[propName]) .. ".")
+			error("Invalid type of \"" .. pkg.id() .. ".inc\" - " .. type(pkg.cfg[propName]) .. ".")
 		end
 	end
 
+	function self.forEachPackageSubPropDo(whatToDo, propName, subPropName, pkg)
+		local prop = pkg.cfg[propName]
+		if prop ~= nil then
+			local subProp = prop[subPropName]
+			if subProp ~= nil then
+				if type(subProp) == "string" then
+					whatToDo(pkg, subProp)
+				elseif type(subProp) == "table" then
+					for _, propValue in ipairs(subProp) do
+						whatToDo(pkg, propValue)
+					end
+				else
+					error(string.format("Invalid type of \"%s.%s.%s\" - %s", pkg.id(), propName, subPropName, type(subProp)))
+				end
+			end
+		end
+	end
+
+	-- Deprecated
 	function self.handlePackagesProp(whatToDo, propName, pkgs)
 		for _, p in ipairs(pkgs) do
 			self.forEachPackagePropDo(whatToDo, propName, p)
+		end
+	end
+
+	function self.handlePackagesSubProp(whatToDo, propName, subPropName, pkgs)
+		for _, p in ipairs(pkgs) do
+			self.forEachPackageSubPropDo(whatToDo, propName, subPropName, p)
 		end
 	end
 	
@@ -128,21 +154,50 @@ function PackageManager.new()
 		return v
 	end
 
+	-- Deprecated
 	function self.include(...)
 		self.handlePackagesProp(self.performInclude, "inc", parsePackages(table.pack(...)))
 	end
 	
+	--  Deprecated
 	function self.link(...)
 		self.handlePackagesProp(self.performLink, "link", parsePackages(table.pack(...)))
 	end
 
+	--  Deprecated
 	function self.includeDirect(...)
 		self.handlePackagesProp(self.performInclude, "inc", table.pack(...))
 	end
 	
+	-- Deprecated
 	function self.linkDirect(...)
 		self.handlePackagesProp(self.performLink, "link", table.pack(...))
 	end
+
+	function self.includeDirectNew(...)
+		self.handlePackagesSubProp(self.performInclude, "includeDirectories", "interface", table.pack(...))
+		self.handlePackagesSubProp(self.performInclude, "includeDirectories", "public", table.pack(...))
+	end
+	
+	function self.linkSingle(pkg)
+		local pkgName = pkg.cfg.name
+		local pkgType = pkg.cfg.type
+
+		if 	pkgType == "static library" or
+			pkgType == "shared library" then
+
+			print("---- Linking: \"" .. pkg.platformDir("bin", pkgName) .. "\"")
+			links(pkg.platformDir("bin", pkgName))
+
+		end
+	end
+
+	function self.linkDirectNew(...)
+
+		-- self.handlePackagesProp(self.performLink, "linkedLibraries", table.pack(...))
+	end
+
+
 
 	return self
 end

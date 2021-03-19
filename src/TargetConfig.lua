@@ -35,6 +35,8 @@ local function parseTargetConfig(targetConfig)
 	end
 
 	cp("files")
+	cp("includeDirectories")
+	cp("dependsOn")
 	cp("pch")
 	cp("exportSymbolsFile")
 	cp("onInit")

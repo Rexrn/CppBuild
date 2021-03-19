@@ -1,5 +1,6 @@
-local class 	= require("middleclass")
-local util 		= require("Utility")
+local class 			= require("middleclass")
+local util 				= require("Utility")
+local PackageManager 	= require("PackageManager");
 
 local Project = class("Project")
 
@@ -38,7 +39,28 @@ function Project:evaluate()
 	-- Configurable values:
 	language(self.language)
 	cppdialect(self.cppStandard)
-	
+
+	if self.dependsOn ~= nil then
+		for index, value in ipairs(self.dependsOn) do
+			print("Importing " .. value.name .. " from " .. value.from )
+
+			Packages.load(value.name, value.from)
+
+			local pkg = Packages.get(value.name).sub(value.name)
+
+			Packages.includeDirectNew(pkg)
+			Packages.linkSingle(pkg)
+		end
+	end
+
+	if self.includeDirectories ~= nil then
+		if self.includeDirectories.public ~= nil then
+			includedirs(self.includeDirectories.public)
+		end
+		if self.includeDirectories.private ~= nil then
+			includedirs(self.includeDirectories.private)
+		end
+	end
 
 	if self.pch ~= nil then
 		util.configurePCH(self.pch.header, self.pch.source, self.pch.macro)
