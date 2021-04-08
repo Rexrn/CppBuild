@@ -1,4 +1,4 @@
-local class 			= require("middleclass")
+local class 			= require("thirdparty/middleclass")
 local util 				= require("Utility")
 local PackageManager 	= require("PackageManager");
 
@@ -39,6 +39,26 @@ function Project:evaluate()
 	-- Configurable values:
 	language(self.language)
 	cppdialect(self.cppStandard)
+
+	function isArray(arr)
+		if type(arr) == "table" and arr[1] ~= nil then
+			return true
+		end
+		return false
+	end
+
+	function preparePropWithAccessSpecs(propName)
+		if self[propName] ~= nil then
+			if isArray(self[propName]) then
+				self[propName] = { public = self[propName] }
+			end
+		end
+	end
+
+	preparePropWithAccessSpecs("includeDirectories")
+	preparePropWithAccessSpecs("dependsOn")
+	preparePropWithAccessSpecs("compileOptions")
+	preparePropWithAccessSpecs("linkOptions")
 
 	if self.dependsOn ~= nil then
 		for index, value in ipairs(self.dependsOn) do

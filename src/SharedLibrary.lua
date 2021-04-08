@@ -1,4 +1,4 @@
-local class = require("middleclass")
+local class = require("thirdparty/middleclass")
 
 local Project = require("Project")
 

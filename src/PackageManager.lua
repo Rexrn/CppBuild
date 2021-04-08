@@ -175,8 +175,11 @@ function PackageManager.new()
 	end
 
 	function self.includeDirectNew(...)
+		printf("xd")
 		self.handlePackagesSubProp(self.performInclude, "includeDirectories", "interface", table.pack(...))
+		printf("xd2")
 		self.handlePackagesSubProp(self.performInclude, "includeDirectories", "public", table.pack(...))
+		printf("xd3")
 	end
 	
 	function self.linkSingle(pkg)

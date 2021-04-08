@@ -2,6 +2,7 @@ local Project 			= require("Project")
 local Workspace 		= require("Workspace")
 local util 				= require("Utility")
 local parseTargetConfig = require("TargetConfig")
+local print_c			= require("./IO")
 
 Quick = {
 	
@@ -46,7 +47,7 @@ function Quick.multiproject(wksName, projects)
 			if value.name == nil then
 				value.name = key
 			end
-			print("Loaded project " .. value.name )
+			print_c("{b}Loaded project:{green} %s\n", value.name )
 			Quick.project(value, wks)
 		end
 	end
@@ -59,19 +60,19 @@ function Quick.autodetect(target)
 
 	if target.type == nil then
 
-		print("CppBuild Autodetect: Multi-Project Mode")
+		print_c("{b}CppBuild Autodetect:{n} Multi-Project Mode\n")
 
 		return Quick.multiproject(target.name, target)
 
 	elseif target.type == "workspace" then
 
-		print("CppBuild Autodetect: Workspace Mode")
+		print_c("{b}CppBuild Autodetect:{n} Workspace Mode\n")
 		target.evaluate()
 		return target
 
 	else
 
-		print("CppBuild Autodetect: Project Mode")
+		print_c("{b}CppBuild Autodetect:{n} Project Mode\n")
 		return Quick.project(target)
 
 	end

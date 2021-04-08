@@ -34,8 +34,8 @@ function CppPackage.new(id, root)
 		if type(result) ~= "table" then
 			error(string.format("Could not load package \"%s\": script execution must result in a table, but %s given.", _id, type(result)))
 		end
-		
-		self.cfg = result
+		local parseTargetConfig = require("TargetConfig")
+		self.cfg = parseTargetConfig(result)
 	end
 
 	function self.ensureLoaded()
